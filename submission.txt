@@ -1,0 +1,10 @@
+# IT5022 Fundamentals of Machine Learning - Submission Information
+
+Dataset Source URL:
+https://www.kaggle.com/datasets/avikdas567/electrical-grid-stability-and-control-simulation
+
+Public GitHub Repository URL:
+https://github.com/Ckavinda98/IT5022_Fundamentals_of_Machine_Learning_Assignment-.git
+
+YouTube Presentation / Demo URL:
+https://youtu.be/[your-video-id]

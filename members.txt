@@ -1,0 +1,12 @@
+# Group Assignment Members
+# Provide Member IDs and email addresses below
+
+Member 1:
+Name: [Member 1 Name]
+Student ID: [Member 1 ID]
+Email: [Member 1 Email]
+
+Member 2:
+Name: [Member 2 Name]
+Student ID: [Member 2 ID]
+Email: [Member 2 Email]

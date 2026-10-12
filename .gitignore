@@ -1,0 +1,30 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache and byte-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment and sensitive keys
+.env
+.env.*
+
+# Generated processed datasets
+data/processed/
+
+# Extra details / assignment reference docs (Local only)
+Extra_Detials/
+extra_details/
+Extra_Details/
+extra_detials/
+
+# OS specific files
+.DS_Store
+Thumbs.db
