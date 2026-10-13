@@ -49,8 +49,10 @@ IT5022_Fundamentals_of_Machine_Learning_Assignment-/
 │   ├── data_checks.py                  # Data quality & schema verification
 │   ├── preprocessing.py               # Leakage-safe stratified train/test split
 │   ├── train_models.py                # Logistic Regression & Random Forest pipelines
+│   ├── train_predictor.py              # Train and save the UI prediction model
 │   ├── evaluation.py                  # Metrics & confusion matrix calculations
 │   └── run_pipeline.py                # End-to-end execution runner
+├── app.py                              # Interactive Streamlit prediction UI
 ├── outputs/
 │   ├── figures/                        # Generated high-resolution plots
 │   │   ├── target_distribution.png
@@ -114,7 +116,38 @@ This single command will automatically:
 5. Evaluate both models on the held-out test data and save metrics to `outputs/metrics/model_comparison.csv`.
 6. Generate side-by-side confusion matrices and feature importance rankings.
 
-### Step 5: (Optional) Run Individual Modules
+### Step 5: Train a Model and Open the Prediction UI
+
+After installing the dependencies, train and save the Random Forest model once,
+then start the Streamlit interface:
+
+```powershell
+python -m src.train_predictor
+streamlit run app.py
+```
+
+The app opens in your browser. Enter `tau1`-`tau4`, `p1`-`p4`, and `g1`-`g4`,
+then select **Predict stability**. It displays the predicted class and the
+model-estimated probabilities for `stable` and `unstable`. Power values must
+approximately satisfy `p1 + p2 + p3 + p4 = 0`. The trained model is saved under
+`outputs/models/`; retrain it after changing the dataset or model settings.
+
+### Deploy the UI so others can use it
+
+The app can be deployed to Streamlit Community Cloud and shared through its
+public URL. Push the project branch to GitHub:
+
+```powershell
+git push -u origin Development-Darshana-Nadeera
+```
+
+Then sign in at <https://share.streamlit.io>, connect GitHub, and create an app
+using this repository, the `Development-Darshana-Nadeera` branch, and `app.py`
+as the entrypoint. Set the app's access to public, deploy it, then share the
+generated `*.streamlit.app` URL. The app trains and caches its model from the
+CSV on its first start if the locally generated model artifact is absent.
+
+### Step 6: (Optional) Run Individual Modules
 You can also run individual modular components directly:
 - **Audit Data Quality:**
   ```bash
