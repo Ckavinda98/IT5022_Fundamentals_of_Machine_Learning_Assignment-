@@ -70,21 +70,14 @@ st.markdown("""
         gap: 8px !important;
     }
 
-    /* Explicitly keep System and Dark buttons visible (each takes 50%) */
+    /* Keep all three theme choices visible and give them equal space */
     [data-testid="stMainMenuItem-theme-System"],
+    [data-testid="stMainMenuItem-theme-Light"],
     [data-testid="stMainMenuItem-theme-Dark"],
-    [data-testid="stThemeSwitcher"] > *:first-child,
-    [data-testid="stThemeSwitcher"] > *:last-child {
+    [data-testid="stThemeSwitcher"] > * {
         display: flex !important;
         visibility: visible !important;
-        flex: 1 1 50% !important;
-    }
-
-    /* Hide 'Light' mode button */
-    [data-testid="stMainMenuItem-theme-Light"],
-    [data-testid="stThemeSwitcher"] > *:nth-child(2) {
-        display: none !important;
-        visibility: hidden !important;
+        flex: 1 1 33.333% !important;
     }
 
     /* 3. Hide all menu items & dividers below the theme switcher */
@@ -107,33 +100,48 @@ st.markdown("""
         margin-bottom: 0 !important;
     }
 
-    /* Sidebar Brand Title (Adaptive Light/Dark/System Theme) */
+    /* Sidebar brand colors for light, dark, and system themes */
     .brand-title {
         margin: 0 !important;
         font-size: 1.25rem !important;
         font-weight: 800 !important;
-        color: var(--text-color, #0f172a) !important;
+        color: #0f172a !important;
         letter-spacing: -0.01em !important;
         line-height: 1.2 !important;
     }
 
     .brand-subtitle {
         font-size: 0.72rem !important;
-        color: #0284c7 !important;
+        color: #0369a1 !important;
         font-weight: 700 !important;
         letter-spacing: 0.06em !important;
         text-transform: uppercase !important;
     }
 
     @media (prefers-color-scheme: dark) {
+        .brand-title {
+            color: #f8fafc !important;
+        }
         .brand-subtitle {
-            color: #38bdf8 !important;
+            color: #7dd3fc !important;
         }
     }
 
+    [data-theme="dark"] .brand-title,
+    [data-base="dark"] .brand-title {
+        color: #f8fafc !important;
+    }
     [data-theme="dark"] .brand-subtitle,
     [data-base="dark"] .brand-subtitle {
-        color: #38bdf8 !important;
+        color: #7dd3fc !important;
+    }
+    [data-theme="light"] .brand-title,
+    [data-base="light"] .brand-title {
+        color: #0f172a !important;
+    }
+    [data-theme="light"] .brand-subtitle,
+    [data-base="light"] .brand-subtitle {
+        color: #0369a1 !important;
     }
 
     /* ---------------------------------------------------------
@@ -865,21 +873,31 @@ with tab_topology:
         ```
         """)
 
+        st.markdown("**Simplified swing equation**")
+        st.latex(r"""
+        M_i \ddot{\theta}_i + D_i \dot{\theta}_i
+        = P_i - \sum_{j \in \mathcal{N}_i} K_{ij}\sin(\theta_i - \theta_j)
+        """)
+        st.caption(
+            "M: generator inertia | D: damping | theta: electrical phase | "
+            "P: net power | K: strength of the connection between nodes"
+        )
+
     with top_col2:
         st.markdown(r"""
         <div class="glass-card">
-            <div class="glass-card-header">📐 Mathematical Governing Equations</div>
-            <p style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
-                The smart grid stability problem is modeled using swing equations for rotatory generators and delayed consumer price adaptation:
+            <div class="glass-card-header">How Grid Stability Works</div>
+            <p style="font-size:0.9rem; color:#cbd5e1; line-height:1.6;">
+                This four-node grid has one supplier and three consumers connected by power lines. The model describes how their power and responses affect grid stability. Damping helps reduce repeated swings in the grid.
             </p>
-            <div style="background:rgba(0,0,0,0.3); padding:10px 14px; border-radius:8px; font-family:'JetBrains Mono'; font-size:0.85rem; color:#38bdf8; margin:10px 0;">
-                M_i \ddot{\theta}_i + D_i \dot{\theta}_i = P_i - \sum K_{ij} \sin(\theta_i - \theta_j)
+            <div style="background:rgba(0,0,0,0.3); padding:10px 14px; border-radius:8px; margin:10px 0; color:#cbd5e1; font-size:0.85rem; line-height:1.55;">
+                <strong style="color:#38bdf8;">What the model values mean</strong><br>
+                <b>Reaction time (tau):</b> How long a participant takes to respond to a signal.<br>
+                <b>Power (p):</b> Power supplied or used. The grid is balanced when supply equals demand.<br>
+                <b>Price elasticity (gamma):</b> How strongly demand changes when the price changes.
             </div>
-            <p style="font-size:0.82rem; color:#94a3b8; line-height:1.5;">
-                • $\tau_i$: Reaction delay of participants adjusting demand to market signals.<br>
-                • $p_i$: Injected or extracted active power satisfying $\sum p_i = 0$.<br>
-                • $\gamma_i$: Price elasticity governing economic feedback strength.<br>
-                • <b>Eigenvalue Root ($stab$):</b> Max real part of root. If $stab \le 0 \implies Stable$, else $Unstable$.
+            <p style="font-size:0.85rem; color:#cbd5e1; line-height:1.55; margin-bottom:0;">
+                <b>Stability score (stab):</b> Zero or below is labelled stable; above zero is labelled unstable. Since this score creates the answer label, the prediction model does not use it as an input.
             </p>
         </div>
         """, unsafe_allow_html=True)
