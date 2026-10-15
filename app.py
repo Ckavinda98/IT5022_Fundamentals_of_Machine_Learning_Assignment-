@@ -11,7 +11,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-from src.preprocessing import FEATURE_COLUMNS, TARGET_COLUMN
+from src.preprocessing import FEATURE_COLUMNS, TARGET_COLUMN, load_and_split_data
 from src.train_predictor import train_model
 
 # ---------------------------------------------------------
@@ -370,6 +370,13 @@ def load_sample_dataset():
     if DATA_PATH.exists():
         return pd.read_csv(DATA_PATH)
     return None
+
+
+@st.cache_data
+def load_test_split():
+    """Returns the 20% held-out test split that the app model never trained on."""
+    _, X_test, _, y_test = load_and_split_data(DATA_PATH)
+    return X_test.assign(**{TARGET_COLUMN: y_test})
 
 
 # Load Model
@@ -859,7 +866,7 @@ with tab_topology:
         """)
 
     with top_col2:
-        st.markdown("""
+        st.markdown(r"""
         <div class="glass-card">
             <div class="glass-card-header">📐 Mathematical Governing Equations</div>
             <p style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
@@ -869,7 +876,7 @@ with tab_topology:
                 M_i \ddot{\theta}_i + D_i \dot{\theta}_i = P_i - \sum K_{ij} \sin(\theta_i - \theta_j)
             </div>
             <p style="font-size:0.82rem; color:#94a3b8; line-height:1.5;">
-                • $\\tau_i$: Reaction delay of participants adjusting demand to market signals.<br>
+                • $\tau_i$: Reaction delay of participants adjusting demand to market signals.<br>
                 • $p_i$: Injected or extracted active power satisfying $\sum p_i = 0$.<br>
                 • $\gamma_i$: Price elasticity governing economic feedback strength.<br>
                 • <b>Eigenvalue Root ($stab$):</b> Max real part of root. If $stab \le 0 \implies Stable$, else $Unstable$.
@@ -888,8 +895,9 @@ with tab_batch:
     batch_mode = st.radio("Select batch input source:", ["Use 20 Random Test Records from Dataset", "Upload Custom CSV File"], horizontal=True)
 
     if batch_mode == "Use 20 Random Test Records from Dataset":
-        if raw_data_df is not None:
-            sample_batch = raw_data_df.sample(20, random_state=42)
+        if DATA_PATH.exists():
+            # Sample only from the held-out test split so the accuracy shown is unbiased
+            sample_batch = load_test_split().sample(20, random_state=42)
             X_batch = sample_batch[FEATURE_COLUMNS]
             ground_truth = sample_batch[TARGET_COLUMN].values
 
@@ -910,7 +918,7 @@ with tab_batch:
             st.dataframe(styled_batch, use_container_width=True)
 
             acc_batch = (batch_preds == ground_truth).mean()
-            st.success(f"Batch Accuracy on Selected 20 Cases: **{acc_batch:.1%}** ({(batch_preds == ground_truth).sum()} / 20 correct)")
+            st.success(f"Batch Accuracy on 20 Held-Out Test Cases: **{acc_batch:.1%}** ({(batch_preds == ground_truth).sum()} / 20 correct)")
         else:
             st.error("Raw dataset not found.")
 

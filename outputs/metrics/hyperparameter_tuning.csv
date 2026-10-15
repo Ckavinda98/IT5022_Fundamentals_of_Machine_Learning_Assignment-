@@ -1,0 +1,23 @@
+Model,params,cv_macro_f1_mean,cv_macro_f1_std,rank
+Logistic Regression,"{'classifier__C': 10, 'poly__degree': 2}",0.9337,0.0074,1
+Logistic Regression,"{'classifier__C': 100, 'poly__degree': 2}",0.9333,0.0069,2
+Logistic Regression,"{'classifier__C': 1, 'poly__degree': 2}",0.9332,0.0073,3
+Logistic Regression,"{'classifier__C': 0.1, 'poly__degree': 2}",0.9218,0.0049,4
+Logistic Regression,"{'classifier__C': 0.01, 'poly__degree': 2}",0.8695,0.0089,5
+Logistic Regression,"{'classifier__C': 0.1, 'poly__degree': 1}",0.7956,0.008,6
+Logistic Regression,"{'classifier__C': 1, 'poly__degree': 1}",0.7956,0.008,7
+Logistic Regression,"{'classifier__C': 10, 'poly__degree': 1}",0.7956,0.008,7
+Logistic Regression,"{'classifier__C': 100, 'poly__degree': 1}",0.7956,0.008,7
+Logistic Regression,"{'classifier__C': 0.01, 'poly__degree': 1}",0.7907,0.009,10
+Random Forest,"{'max_depth': 20, 'max_features': 'sqrt', 'min_samples_leaf': 1}",0.9102,0.0102,1
+Random Forest,"{'max_depth': None, 'max_features': 'sqrt', 'min_samples_leaf': 1}",0.9099,0.0103,2
+Random Forest,"{'max_depth': None, 'max_features': 'sqrt', 'min_samples_leaf': 3}",0.9077,0.0079,3
+Random Forest,"{'max_depth': 20, 'max_features': 'sqrt', 'min_samples_leaf': 3}",0.9077,0.0079,3
+Random Forest,"{'max_depth': 12, 'max_features': 'sqrt', 'min_samples_leaf': 1}",0.9075,0.0118,5
+Random Forest,"{'max_depth': 12, 'max_features': 'sqrt', 'min_samples_leaf': 3}",0.9054,0.0106,6
+Random Forest,"{'max_depth': 20, 'max_features': 0.5, 'min_samples_leaf': 1}",0.9045,0.0092,7
+Random Forest,"{'max_depth': None, 'max_features': 0.5, 'min_samples_leaf': 1}",0.9043,0.0093,8
+Random Forest,"{'max_depth': 12, 'max_features': 0.5, 'min_samples_leaf': 1}",0.9027,0.0098,9
+Random Forest,"{'max_depth': 12, 'max_features': 0.5, 'min_samples_leaf': 3}",0.901,0.0104,10
+Random Forest,"{'max_depth': None, 'max_features': 0.5, 'min_samples_leaf': 3}",0.9004,0.0091,11
+Random Forest,"{'max_depth': 20, 'max_features': 0.5, 'min_samples_leaf': 3}",0.9004,0.0091,11

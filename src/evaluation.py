@@ -18,13 +18,13 @@ def evaluate_predictions(y_true, y_pred, labels=("stable", "unstable")) -> dict:
     macro_f1 = f1_score(y_true, y_pred, average="macro")
     weighted_f1 = f1_score(y_true, y_pred, average="weighted")
     
-    prec_stable = precision_score(y_true, y_pred, pos_label="stable")
-    rec_stable = recall_score(y_true, y_pred, pos_label="stable")
-    f1_stable = f1_score(y_true, y_pred, pos_label="stable")
+    prec_stable = precision_score(y_true, y_pred, pos_label="stable", zero_division=0)
+    rec_stable = recall_score(y_true, y_pred, pos_label="stable", zero_division=0)
+    f1_stable = f1_score(y_true, y_pred, pos_label="stable", zero_division=0)
     
-    prec_unstable = precision_score(y_true, y_pred, pos_label="unstable")
-    rec_unstable = recall_score(y_true, y_pred, pos_label="unstable")
-    f1_unstable = f1_score(y_true, y_pred, pos_label="unstable")
+    prec_unstable = precision_score(y_true, y_pred, pos_label="unstable", zero_division=0)
+    rec_unstable = recall_score(y_true, y_pred, pos_label="unstable", zero_division=0)
+    f1_unstable = f1_score(y_true, y_pred, pos_label="unstable", zero_division=0)
     
     cm = confusion_matrix(y_true, y_pred, labels=list(labels))
     
@@ -39,5 +39,5 @@ def evaluate_predictions(y_true, y_pred, labels=("stable", "unstable")) -> dict:
         "unstable_recall": rec_unstable,
         "unstable_f1": f1_unstable,
         "confusion_matrix": cm,
-        "classification_report": classification_report(y_true, y_pred, digits=4)
+        "classification_report": classification_report(y_true, y_pred, digits=4, zero_division=0)
     }

@@ -32,7 +32,7 @@ To avoid critical **target leakage**, the eigenvalue continuous score `stab` was
 ## 2. Key Findings & Discussion
 
 1. **Superiority of Non-Linear Ensemble Modeling:**  
-   Random Forest achieved an overall accuracy of **92.90%** and Macro-F1 of **0.9220**, significantly outperforming both the zero-rule baseline (63.80%) and Logistic Regression (82.00%). This demonstrates that electrical grid stability is governed by non-linear interactions across reaction times and elasticity parameters rather than linear relationships.
+   Random Forest achieved an overall accuracy of **92.90%** and Macro-F1 of **0.9220**, significantly outperforming both the zero-rule baseline (63.80%) and Logistic Regression (82.00%). This suggests that grid stability depends on non-linear interactions between reaction times and elasticity parameters. Section 3 shows that supplying those interactions explicitly makes Logistic Regression the best model.
 
 2. **Critical Operational Risk (False Stables):**  
    In electrical grid management, a **False Stable** error (predicting a grid is safe/stable when it is actually unstable) is catastrophic as it risks cascading blackouts.
@@ -47,10 +47,26 @@ To avoid critical **target leakage**, the eigenvalue continuous score `stab` was
 
 ---
 
-## 3. Generated Figures & Output References
+## 3. Accuracy-Improvement Experiments (5-fold CV on training set; test set used once)
+
+| Model | Accuracy | Macro-F1 | ROC-AUC | Missed unstable | False alarms |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| Logistic Regression + degree-2 polynomial features (C = 10) | **95.55%** | **0.9518** | **0.9897** | 45 | 44 |
+| Random Forest tuned (max_depth = 20) | 92.70% | 0.9201 | 0.9829 | 55 | 91 |
+| LR polynomial, recall-oriented threshold 0.25 | 94.05% | 0.9338 | 0.9897 | **17** | 102 |
+
+- Dropping the redundant `p1` (exactly `-(p2+p3+p4)`) does not change LR and slightly helps RF; power features alone are no better than the majority baseline.
+- Tuning Random Forest changed CV macro-F1 by < 0.01; interaction features raised LR CV macro-F1 from 0.796 to 0.934.
+- 61% of Random Forest errors have |stab| < 0.01 (vs 14% of all test records): errors concentrate at the stability boundary.
+
+The full report is `report/report.pdf` (editable source: `report/report.docx`).
+
+## 4. Generated Figures & Output References
 - Target Distribution: `outputs/figures/target_distribution.png`
 - Leakage Demonstration Plot: `outputs/figures/stab_vs_stabf_leakage.png`
 - 12-Feature Correlation Heatmap: `outputs/figures/feature_correlation_heatmap.png`
 - Comparative Confusion Matrices: `outputs/figures/confusion_matrices.png`
 - Feature Importance Bar Chart: `outputs/figures/rf_feature_importance.png`
 - Metric Summary Table: `outputs/metrics/model_comparison.csv`
+- Final comparison of all models: `outputs/metrics/final_model_comparison.csv`
+- ROC curves, PCA, permutation importance, threshold trade-off: `outputs/figures/`
