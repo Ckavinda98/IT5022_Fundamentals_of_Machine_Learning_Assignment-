@@ -1,0 +1,27 @@
+Model,threshold,unstable_recall,unstable_precision,macro_f1,accuracy
+"Logistic Regression (tuned, polynomial)",0.2,0.9843,0.896,0.9064,0.9171
+"Logistic Regression (tuned, polynomial)",0.25,0.981,0.9062,0.9138,0.9231
+"Logistic Regression (tuned, polynomial)",0.3,0.9773,0.9169,0.921,0.929
+"Logistic Regression (tuned, polynomial)",0.35,0.9736,0.9267,0.9271,0.934
+"Logistic Regression (tuned, polynomial)",0.4,0.9675,0.9359,0.9309,0.937
+"Logistic Regression (tuned, polynomial)",0.45,0.9608,0.9434,0.9327,0.9382
+"Logistic Regression (tuned, polynomial)",0.5,0.9545,0.9499,0.9337,0.9389
+"Logistic Regression (tuned, polynomial)",0.55,0.9469,0.9565,0.9338,0.9386
+"Logistic Regression (tuned, polynomial)",0.6,0.9371,0.961,0.931,0.9356
+"Logistic Regression (tuned, polynomial)",0.65,0.9273,0.9661,0.9284,0.9329
+"Logistic Regression (tuned, polynomial)",0.7,0.9193,0.9708,0.9266,0.9309
+"Logistic Regression (tuned, polynomial)",0.75,0.905,0.9753,0.9205,0.9248
+"Logistic Regression (tuned, polynomial)",0.8,0.8895,0.9801,0.9139,0.918
+Random Forest (tuned),0.2,1.0,0.7315,0.6835,0.7659
+Random Forest (tuned),0.25,0.9996,0.7672,0.7515,0.8062
+Random Forest (tuned),0.3,0.9976,0.8003,0.8025,0.8396
+Random Forest (tuned),0.35,0.9939,0.8334,0.8447,0.8694
+Random Forest (tuned),0.4,0.9851,0.8621,0.8729,0.89
+Random Forest (tuned),0.45,0.9732,0.8909,0.8951,0.9069
+Random Forest (tuned),0.5,0.9569,0.9186,0.9101,0.9184
+Random Forest (tuned),0.55,0.9291,0.9429,0.9127,0.9189
+Random Forest (tuned),0.6,0.8954,0.9623,0.9058,0.9109
+Random Forest (tuned),0.65,0.8523,0.976,0.8881,0.8924
+Random Forest (tuned),0.7,0.7984,0.9869,0.8613,0.8646
+Random Forest (tuned),0.75,0.729,0.9944,0.8225,0.8245
+Random Forest (tuned),0.8,0.6571,0.9982,0.7798,0.7805

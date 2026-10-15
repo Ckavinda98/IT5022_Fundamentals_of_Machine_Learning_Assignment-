@@ -7,7 +7,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-from sklearn.metrics import ConfusionMatrixDisplay, roc_curve, auc
+from sklearn.metrics import ConfusionMatrixDisplay
 
 from src.preprocessing import load_and_split_data
 from src.train_models import get_logistic_regression_pipeline, get_random_forest_model
@@ -32,7 +32,8 @@ def run_full_pipeline():
     print("2. Generating EDA figures...")
     # Plot 1: Target distribution
     plt.figure(figsize=(6, 4))
-    sns.countplot(data=df_raw, x="stabf", palette=["#e74c3c", "#2ecc71"])
+    sns.countplot(data=df_raw, x="stabf", hue="stabf", order=["unstable", "stable"],
+                  palette={"unstable": "#e74c3c", "stable": "#2ecc71"}, legend=False)
     plt.title("Distribution of Stability Class (stabf)")
     plt.xlabel("Grid Stability Label")
     plt.ylabel("Sample Count")
@@ -42,7 +43,8 @@ def run_full_pipeline():
     
     # Plot 2: Boxplot of stab by stabf (Leakage illustration)
     plt.figure(figsize=(6, 4))
-    sns.boxplot(data=df_raw, x="stabf", y="stab", palette=["#e74c3c", "#2ecc71"])
+    sns.boxplot(data=df_raw, x="stabf", y="stab", hue="stabf", order=["unstable", "stable"],
+                palette={"unstable": "#e74c3c", "stable": "#2ecc71"}, legend=False)
     plt.axhline(0, color="black", linestyle="--", alpha=0.7, label="Threshold (stab=0)")
     plt.title("Continuous Stability Score (stab) vs Target Class (stabf)")
     plt.xlabel("Grid Stability Label")
@@ -61,22 +63,34 @@ def run_full_pipeline():
     plt.savefig(figures_dir / "feature_correlation_heatmap.png", dpi=300)
     plt.close()
 
+    # Plot 4: Distribution of each operating feature by stability class
+    long_df = df_raw.melt(id_vars="stabf", value_vars=feature_cols, var_name="feature")
+    grid = sns.FacetGrid(long_df, col="feature", col_wrap=4, hue="stabf", sharex=False, sharey=False,
+                         palette={"unstable": "#e74c3c", "stable": "#2ecc71"}, height=2.2, aspect=1.4)
+    grid.map(sns.kdeplot, "value", fill=True, alpha=0.35)
+    grid.add_legend(title="stabf")
+    grid.figure.suptitle("Operating Feature Distributions by Stability Class", y=1.02)
+    grid.savefig(figures_dir / "feature_distributions_by_class.png", dpi=300, bbox_inches="tight")
+    plt.close(grid.figure)
+
     print("3. Training Logistic Regression pipeline...")
     lr_pipe = get_logistic_regression_pipeline()
     lr_pipe.fit(X_train, y_train)
     y_pred_lr = lr_pipe.predict(X_test)
-    y_prob_lr = lr_pipe.predict_proba(X_test)[:, 1] # Probability of unstable
     
     print("4. Training Random Forest classifier...")
     rf_model = get_random_forest_model()
     rf_model.fit(X_train, y_train)
     y_pred_rf = rf_model.predict(X_test)
-    y_prob_rf = rf_model.predict_proba(X_test)[:, 1]
 
     print("5. Evaluating predictions...")
     res_lr = evaluate_predictions(y_test, y_pred_lr)
     res_rf = evaluate_predictions(y_test, y_pred_rf)
     
+    # Zero-rule baseline: always predict the majority class seen in training
+    majority_class = y_train.mode()[0]
+    baseline_acc = (y_test == majority_class).mean()
+
     # Comparison Table
     comparison_df = pd.DataFrame({
         "Metric": [
@@ -92,7 +106,7 @@ def run_full_pipeline():
             "Unstable F1-Score"
         ],
         "Logistic Regression": [
-            0.6380,
+            round(baseline_acc, 4),
             round(res_lr["accuracy"], 4),
             round(res_lr["macro_f1"], 4),
             round(res_lr["weighted_f1"], 4),
@@ -104,7 +118,7 @@ def run_full_pipeline():
             round(res_lr["unstable_f1"], 4),
         ],
         "Random Forest": [
-            0.6380,
+            round(baseline_acc, 4),
             round(res_rf["accuracy"], 4),
             round(res_rf["macro_f1"], 4),
             round(res_rf["weighted_f1"], 4),
@@ -138,7 +152,7 @@ def run_full_pipeline():
     # Feature Importance Figure (Random Forest)
     importances = pd.Series(rf_model.feature_importances_, index=feature_cols).sort_values(ascending=False)
     plt.figure(figsize=(10, 5))
-    sns.barplot(x=importances.values, y=importances.index, palette="viridis")
+    sns.barplot(x=importances.values, y=importances.index, hue=importances.index, palette="viridis", legend=False)
     plt.title("Random Forest Feature Importances (MDI)")
     plt.xlabel("Mean Decrease in Impurity")
     plt.ylabel("Grid Parameter")
