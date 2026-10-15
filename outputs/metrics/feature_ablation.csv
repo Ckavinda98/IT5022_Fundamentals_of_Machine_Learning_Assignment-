@@ -1,0 +1,13 @@
+Feature set,Model,n_features,cv_accuracy,cv_macro_f1,cv_macro_f1_std
+All 12 features,Logistic Regression,12,0.8146,0.7956,0.008
+All 12 features,Random Forest,12,0.9162,0.9078,0.0118
+Without p1 (11 features),Logistic Regression,11,0.8146,0.7956,0.008
+Without p1 (11 features),Random Forest,11,0.9186,0.9105,0.0109
+Without p1-p4 (tau + g),Logistic Regression,8,0.8125,0.7931,0.007
+Without p1-p4 (tau + g),Random Forest,8,0.9221,0.9145,0.0076
+tau only,Logistic Regression,4,0.7321,0.6945,0.0123
+tau only,Random Forest,4,0.7594,0.7324,0.0081
+g only,Logistic Regression,4,0.7191,0.6745,0.0152
+g only,Random Forest,4,0.702,0.652,0.0127
+p only,Logistic Regression,4,0.638,0.3895,0.0001
+p only,Random Forest,4,0.5814,0.4817,0.0084
