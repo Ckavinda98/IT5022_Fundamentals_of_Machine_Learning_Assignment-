@@ -3,10 +3,10 @@
 
 Member 1:
 Name: Charuka Kavinda
-Student ID: [Member 1 ID]
-Email: ckavinda57@gmail.com
+Student ID: MS26922966
+Email: ms26922966@my.sliit.lk
 
 Member 2:
 Name: Nadeera Rajapaksha
-Student ID: [Member 2 ID]
-Email: [Member 2 Email]
+Student ID: MS26923192
+Email: ms26923192@my.sliit.lk
