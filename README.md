@@ -80,7 +80,7 @@ IT5022_Fundamentals_of_Machine_Learning_Assignment-/
 └── report/
     ├── report_draft.md                 # Short summary of findings
     ├── report.docx                     # Full report (editable)
-    └── report.pdf                      # Full report for submission (code appendix as text)
+    └── IT5022_Fundamentals_of_Machine_Learning_Assignment_01.pdf  # Full report for submission (code appendix as text)
 ```
 
 ---

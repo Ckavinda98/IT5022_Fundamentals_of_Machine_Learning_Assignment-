@@ -59,7 +59,7 @@ To avoid critical **target leakage**, the eigenvalue continuous score `stab` was
 - Tuning Random Forest changed CV macro-F1 by < 0.01; interaction features raised LR CV macro-F1 from 0.796 to 0.934.
 - 61% of Random Forest errors have |stab| < 0.01 (vs 14% of all test records): errors concentrate at the stability boundary.
 
-The full report is `report/report.pdf` (editable source: `report/report.docx`).
+The full report is `report/IT5022_Fundamentals_of_Machine_Learning_Assignment_01.pdf` (editable source: `report/report.docx`).
 
 ## 4. Generated Figures & Output References
 - Target Distribution: `outputs/figures/target_distribution.png`
