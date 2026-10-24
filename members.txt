@@ -1,12 +1,12 @@
 # Group Assignment Members
-# Provide Member IDs and email addresses below
+# IT5022 - Fundamentals of Machine Learning
 
 Member 1:
-Name: [Member 1 Name]
-Student ID: [Member 1 ID]
-Email: [Member 1 Email]
+Name: Charuka Kavinda
+Student ID: MS26922966
+Email: ms26922966@my.sliit.lk
 
 Member 2:
-Name: [Member 2 Name]
-Student ID: [Member 2 ID]
-Email: [Member 2 Email]
+Name: Nadeera Rajapaksha
+Student ID: MS26923192
+Email: ms26923192@my.sliit.lk
